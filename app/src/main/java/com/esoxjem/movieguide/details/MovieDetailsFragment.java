@@ -27,6 +27,7 @@ import com.esoxjem.movieguide.Movie;
 import com.esoxjem.movieguide.R;
 import com.esoxjem.movieguide.Review;
 import com.esoxjem.movieguide.Video;
+import com.esoxjem.movieguide.rxbus.RxBus;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -40,6 +41,9 @@ public class MovieDetailsFragment extends Fragment implements IMovieDetailsView,
 {
     @Inject
     IMovieDetailsPresenter movieDetailsPresenter;
+
+    @Inject
+    RxBus rxbus;
 
     private ImageView poster;
     private TextView title;

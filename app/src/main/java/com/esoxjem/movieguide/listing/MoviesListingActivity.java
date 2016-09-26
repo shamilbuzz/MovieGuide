@@ -6,16 +6,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
-import com.esoxjem.movieguide.R;
+import com.esoxjem.movieguide.BaseApplication;
 import com.esoxjem.movieguide.Constants;
+import com.esoxjem.movieguide.Movie;
+import com.esoxjem.movieguide.R;
 import com.esoxjem.movieguide.details.MovieDetailsActivity;
 import com.esoxjem.movieguide.details.MovieDetailsFragment;
-import com.esoxjem.movieguide.Movie;
+import com.esoxjem.movieguide.rxbus.RxBus;
+import com.esoxjem.movieguide.rxbus.ShowMovieEvent;
+import com.esoxjem.movieguide.util.RxUtils;
+
+import javax.inject.Inject;
+
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class MoviesListingActivity extends AppCompatActivity implements MoviesListingFragment.Callback
 {
     public static final String DETAILS_FRAGMENT = "DetailsFragment";
     private boolean twoPaneMode;
+
+    @Inject
+    RxBus rxbus;
+
+    private Subscription busSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,6 +54,9 @@ public class MoviesListingActivity extends AppCompatActivity implements MoviesLi
         {
             twoPaneMode = false;
         }
+
+        BaseApplication.get(this).getAppComponent().plus(new ListingModule(this)).inject(this);
+        loadMovieEmitter();
     }
 
     private void setToolbar()
@@ -62,24 +81,12 @@ public class MoviesListingActivity extends AppCompatActivity implements MoviesLi
     @Override
     public void onMoviesLoaded(Movie movie)
     {
-        if(twoPaneMode)
-        {
-            loadMovieFragment(movie);
-        } else
-        {
-            // Do not load in single pane view
-        }
-    }
-
-    @Override
-    public void onMovieClicked(Movie movie)
-    {
         if (twoPaneMode)
         {
             loadMovieFragment(movie);
         } else
         {
-            startMovieActivity(movie);
+            // Do not load in single pane view
         }
     }
 
@@ -98,5 +105,39 @@ public class MoviesListingActivity extends AppCompatActivity implements MoviesLi
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.movie_details_container, movieDetailsFragment, DETAILS_FRAGMENT)
                 .commit();
+
+    }
+
+    private void loadMovieEmitter()
+    {
+        busSubscription = rxbus.getObservable().observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Action1<Object>()
+                {
+                    @Override
+                    public void call(Object o)
+                    {
+                        if (o instanceof ShowMovieEvent)
+                        {
+                            if (twoPaneMode)
+                            {
+                                loadMovieFragment(((ShowMovieEvent) o).getMovie());
+                            } else
+                            {
+                                startMovieActivity(((ShowMovieEvent) o).getMovie());
+                            }
+                        } else
+                        {
+                            // do nothing
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        RxUtils.unsubscribe(busSubscription);
     }
 }

@@ -3,6 +3,7 @@ package com.esoxjem.movieguide.listing;
 import android.content.Context;
 
 import com.esoxjem.movieguide.ActivityScope;
+import com.esoxjem.movieguide.Movie;
 import com.esoxjem.movieguide.favorites.IFavoritesInteractor;
 import com.esoxjem.movieguide.network.RequestHandler;
 import com.esoxjem.movieguide.sorting.SortingOptionStore;
@@ -17,7 +18,13 @@ import dagger.Provides;
 @Module
 public class ListingModule
 {
+    private MoviesListingActivity moviesListingActivity;
     private MoviesListingFragment moviesListingFragment;
+
+    public ListingModule(MoviesListingActivity moviesListingActivity)
+    {
+        this.moviesListingActivity = moviesListingActivity;
+    }
 
     public ListingModule(MoviesListingFragment moviesListingFragment)
     {
@@ -26,7 +33,14 @@ public class ListingModule
 
     @Provides
     @ActivityScope
-    MoviesListingFragment provideMoviesListingFragment()
+    MoviesListingActivity provideMoviesListingActivity()
+    {
+        return moviesListingActivity;
+    }
+
+    @Provides
+    @ActivityScope
+    MoviesListingFragment provideMovieListingFragment()
     {
         return moviesListingFragment;
     }

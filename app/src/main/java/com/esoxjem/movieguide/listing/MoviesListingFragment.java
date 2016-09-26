@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.esoxjem.movieguide.BaseApplication;
 import com.esoxjem.movieguide.Movie;
 import com.esoxjem.movieguide.R;
+import com.esoxjem.movieguide.rxbus.RxBus;
+import com.esoxjem.movieguide.rxbus.ShowMovieEvent;
 import com.esoxjem.movieguide.sorting.SortingDialogFragment;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class MoviesListingFragment extends Fragment implements IMoviesListingVie
 {
     @Inject
     IMoviesListingPresenter moviesPresenter;
+    @Inject
+    RxBus rxbus;
 
     private RecyclerView.Adapter adapter;
     private List<Movie> movies = new ArrayList<>(20);
@@ -132,7 +136,7 @@ public class MoviesListingFragment extends Fragment implements IMoviesListingVie
     @Override
     public void onMovieClicked(Movie movie)
     {
-        callback.onMovieClicked(movie);
+        rxbus.send(new ShowMovieEvent(movie));
     }
 
     @Override
@@ -152,7 +156,5 @@ public class MoviesListingFragment extends Fragment implements IMoviesListingVie
     public interface Callback
     {
         void onMoviesLoaded(Movie movie);
-
-        void onMovieClicked(Movie movie);
     }
 }
