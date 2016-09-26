@@ -24,12 +24,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MoviesListingFragment extends Fragment implements IMoviesListingView
+public class MoviesListingFragment extends Fragment implements IMoviesListingView, MoviesListingAdapter.Callback
 {
     @Inject
     IMoviesListingPresenter moviesPresenter;
+    @Inject
+    MoviesListingAdapter adapter;
 
-    private RecyclerView.Adapter adapter;
     private List<Movie> movies = new ArrayList<>(20);
     private Callback callback;
 
@@ -104,7 +105,7 @@ public class MoviesListingFragment extends Fragment implements IMoviesListingVie
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
 
         moviesListing.setLayoutManager(layoutManager);
-        adapter = new MoviesListingAdapter(movies, this);
+        adapter.updateMovieList(movies);
         moviesListing.setAdapter(adapter);
     }
 
