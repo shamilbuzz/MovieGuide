@@ -53,4 +53,25 @@ public class ListingModule
     {
         return new SortingOptionStore(context);
     }
+
+    @Provides
+    @ActivityScope
+    IMoviesListingView provideMoviesListingView()
+    {
+        return moviesListingFragment;
+    }
+
+    @Provides
+    @ActivityScope
+    MovieListingViewHolderFactory provideViewHolderFactory()
+    {
+        return new MovieListingHolderFactory();
+    }
+
+    @Provides
+    @ActivityScope
+    MoviesListingAdapter provideListingAdapter(MovieListingHolderFactory movieListingHolderFactory)
+    {
+        return new MoviesListingAdapter(moviesListingFragment, movieListingHolderFactory);
+    }
 }
