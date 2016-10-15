@@ -1,7 +1,7 @@
 # MovieGuide
 Android app that lists popular/highest-rated movies, shows trailers and reviews.
 
-This app showcases the MVP pattern, RxJava, Dagger 2 and Uncle Bob Martin's Clean Architecture approach.
+This app showcases the MVP pattern, RxJava, Dagger 2(Dependency Injection), Retrofit Integration with RxJava, ButterKnife(View Injection) and Uncle Bob Martin's Clean Architecture approach.
 Optimized for tablets.
 
 Replace `API_KEY` in `Api.java` with your themoviedb.org API key.
