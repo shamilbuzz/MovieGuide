@@ -87,12 +87,6 @@ public class NetworkModule
         return new Cache(cacheDir, cacheSize);
     }
 
-    @Provides
-    @Singleton
-    RequestHandler provideRequestHandler(OkHttpClient okHttpClient)
-    {
-        return new RequestHandler(okHttpClient);
-    }
 
     @Provides
     @Singleton
