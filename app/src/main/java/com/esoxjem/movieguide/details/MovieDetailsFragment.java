@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -46,31 +46,31 @@ public class MovieDetailsFragment extends Fragment implements IMovieDetailsView,
     @Inject
     IMovieDetailsPresenter movieDetailsPresenter;
 
-    @Bind(R.id.movie_poster)
+    @BindView(R.id.movie_poster)
     ImageView poster;
-    @Bind(R.id.movie_name)
+    @BindView(R.id.movie_name)
     TextView title;
-    @Bind(R.id.movie_year)
+    @BindView(R.id.movie_year)
     TextView releaseDate;
-    @Bind(R.id.movie_rating)
+    @BindView(R.id.movie_rating)
     TextView rating;
-    @Bind(R.id.movie_description)
+    @BindView(R.id.movie_description)
     TextView overview;
-    @Bind(trailers_label)
+    @BindView(trailers_label)
     TextView label;
-    @Bind(R.id.trailers_container)
+    @BindView(R.id.trailers_container)
     HorizontalScrollView horizontalScrollView;
-    @Bind(R.id.trailers)
+    @BindView(R.id.trailers)
     LinearLayout trailers;
-    @Bind(R.id.reviews_label)
+    @BindView(R.id.reviews_label)
     TextView reviews;
-    @Bind(R.id.reviews)
+    @BindView(R.id.reviews)
     LinearLayout reviewsContainer;
-    @Bind(R.id.favorite)
+    @BindView(R.id.favorite)
     FloatingActionButton favorite;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.collapsing_toolbar)
+    @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     Movie movie;

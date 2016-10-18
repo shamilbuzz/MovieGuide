@@ -11,7 +11,7 @@ import com.esoxjem.movieguide.constants.Constants;
 import com.esoxjem.movieguide.details.MovieDetailsActivity;
 import com.esoxjem.movieguide.details.MovieDetailsFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MoviesListingActivity extends AppCompatActivity implements MoviesListingFragment.Callback
@@ -19,7 +19,7 @@ public class MoviesListingActivity extends AppCompatActivity implements MoviesLi
     public static final String DETAILS_FRAGMENT = "DetailsFragment";
     private boolean twoPaneMode;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Override

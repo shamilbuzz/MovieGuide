@@ -10,15 +10,20 @@ import android.widget.TextView;
 import com.esoxjem.movieguide.R;
 import com.google.auto.factory.AutoFactory;
 
+import butterknife.BindView;
+
 /**
  * @author Ashwini Kumar.
  */
 @AutoFactory(implementing = MovieListingViewHolderFactory.class)
 public class MovieListingHolder extends RecyclerView.ViewHolder
 {
-    public TextView name;
-    public ImageView poster;
-    public View titleBackground;
+    @BindView(R.id.movie_name)
+    TextView name;
+    @BindView(R.id.movie_poster)
+    ImageView poster;
+    @BindView(R.id.title_background)
+    View titleBackground;
 
     public MovieListingHolder(ViewGroup parent)
     {
