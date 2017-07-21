@@ -26,7 +26,6 @@ import com.esoxjem.movieguide.BaseApplication;
 import com.esoxjem.movieguide.R;
 import com.esoxjem.movieguide.constants.Constants;
 import com.esoxjem.movieguide.listing.Movie;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -176,7 +175,6 @@ public class MovieDetailsFragment extends Fragment implements IMovieDetailsView,
 
             this.trailers.removeAllViews();
             LayoutInflater inflater = getActivity().getLayoutInflater();
-            Picasso picasso = Picasso.with(getContext());
             for (Video trailer : trailers)
             {
                 ViewGroup thumbContainer = (ViewGroup) inflater.inflate(R.layout.video, this.trailers, false);
@@ -184,9 +182,9 @@ public class MovieDetailsFragment extends Fragment implements IMovieDetailsView,
                 thumbView.setTag(Video.getUrl(trailer));
                 thumbView.requestLayout();
                 thumbView.setOnClickListener(this);
-                picasso
+                Glide.with(getContext())
                         .load(Video.getThumbnailUrl(trailer))
-                        .resizeDimen(R.dimen.video_width, R.dimen.video_height)
+                        .override(R.dimen.video_width, R.dimen.video_height)
                         .centerCrop()
                         .placeholder(R.color.colorPrimary)
                         .into(thumbView);
